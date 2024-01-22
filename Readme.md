@@ -1,31 +1,15 @@
-# Corporate Event Management
+# Name : Sriram M
 
-## Introduction
+# Email : msriram765@gmail.com
 
-[Provide a brief introduction to your project or document.]
+## Project Name : Corporate Symphony
 
-## Table of Contents
+## Project Description : Corporate Symphony is a web application that helps the user to manage the events and meetings.
 
-- [Section 1](#section-1)
-- [Section 2](#section-2)
-- [Section 3](#section-3)
+# Day 1
 
-## Section 1
-
-[Describe the content of section 1.]
-
-## Section 2
-
-[Describe the content of section 2.]
-
-## Section 3
-
-[Describe the content of section 3.]
-
-## Conclusion
-
-[Summarize the key points or takeaways from your document.]
-
-## References
-
-[Include any references or resources used in your document.]
+- Created React app using Vite
+- Created two folders for frontend/ and backend/
+- Created the folder structure for the frontend
+- Create a component Hello_World.jsx
+- Import the component in App.jsx and use it.
