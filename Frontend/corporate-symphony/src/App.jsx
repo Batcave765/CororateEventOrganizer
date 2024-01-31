@@ -11,6 +11,7 @@ import EventDetails from "./pages/EventDetails";
 import Profile from "./pages/Profile";
 import UserDisplay from "./pages/UsersDisplay";
 import AdminEventList from "./pages/AdminEventList";
+import ContactUs from "./pages/ContactUs";
 
 function App() {
 	return (
@@ -28,6 +29,7 @@ function App() {
 				<Route path="/userprofile" element={<Profile />} />
 				<Route path="/admineventlist" element={<AdminEventList />} />
 				<Route path="/userdisplay" element={<UserDisplay />} />
+				<Route path="/contactus" element={<ContactUs />} />
 				<Route path="*" element={<h1>Not Found</h1>} />
 			</Routes>
 		</Router>
