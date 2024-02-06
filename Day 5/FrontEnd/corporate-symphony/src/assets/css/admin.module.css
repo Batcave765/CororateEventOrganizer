@@ -1,0 +1,100 @@
+.materialSymbolsOutlined {
+	font-family: "Material Symbols Outlined", sans-serif;
+}
+
+.topBar {
+	width: 100%;
+	height: 10vh;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 20px;
+	position: fixed;
+	top: 0;
+	background-color: #ffffff;
+	z-index: 50;
+	box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+}
+
+.reactSidebar {
+	background-color: #bebebe;
+	position: fixed;
+	left: 0;
+	top: 100vh;
+	z-index: 1500;
+}
+
+.sidebarButton {
+	background-color: #1e1e1e00;
+	color: rgb(0, 0, 0);
+	border: none;
+	border-radius: 5px;
+	font-size: 20px;
+	cursor: pointer;
+	transition: 0.3s;
+	font-size: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: 20px;
+}
+
+.radarChart {
+	height: 300px;
+}
+
+.container {
+	width: 80%;
+	height: 90%;
+	display: flex;
+	align-items: start;
+	justify-content: space-around;
+	margin-top: 15vh;
+	margin-left: 20%;
+}
+
+#center {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.containerTotal {
+	display: flex;
+}
+
+.sidebar {
+	width: 20%;
+	height: 80vh;
+	position: fixed;
+	left: 0;
+	top: 12vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+#sidebarInfo {
+	background-color: rgb(156, 156, 156);
+	margin: 20px 0px;
+	padding: 40px 20px;
+}
+
+.content {
+	padding: 20px;
+	width: 80%;
+	border-radius: 20px;
+}
+
+.cardContent {
+	padding: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.card {
+	z-index: -200;
+}

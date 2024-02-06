@@ -1,0 +1,141 @@
+.content {
+	margin-top: 80px;
+	flex-direction: column;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#cardOne {
+	background: rgb(59, 38, 101);
+	background-image: linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%);
+}
+
+.card {
+	width: 80%;
+	height: 50vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 20px;
+	margin: 20px;
+
+	border-radius: 10px;
+}
+
+.cardInner {
+	margin: 20px;
+	padding: 20px;
+	height: 95%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	color: rgb(0, 0, 0);
+	font-weight: bolder;
+}
+
+.cardInner p {
+	text-align: justify;
+}
+
+.cardInner h1 {
+	font-size: 80px;
+	margin: 30px 0px;
+}
+
+.textContent {
+	width: 90%;
+	margin: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.textContent h3 {
+	font-size: 50px;
+	padding: 10px;
+	margin: 10px;
+}
+
+.textContent h4 {
+	font-size: 35px;
+	padding: 10px;
+	margin: 10px;
+}
+
+.textContent p {
+	font-size: 20px;
+	padding: 10px;
+	margin: 20px;
+	width: 70%;
+}
+
+.mainImg {
+	height: 100%;
+}
+
+.homeButton {
+	padding: 15px;
+	margin: 20px;
+	border-radius: 10px;
+	border: none;
+	color: white;
+	font-weight: 400;
+	font-size: large;
+	background-image: linear-gradient(
+		-225deg,
+		#4dcec3 0%,
+		#5ecf98 20%,
+		#87da4b 40%,
+		#93d325 60%,
+		#87da4b 80%,
+		#5ecf98 90%,
+		#4dcec3 100%
+	);
+	background-size: 200% auto; /* Set background size to accommodate the animation */
+	animation: button 2s linear infinite;
+}
+
+@keyframes button {
+	0% {
+		background-position: 0% center;
+	}
+	100% {
+		background-position: 200% center;
+	}
+}
+
+.textContainer {
+	text-transform: uppercase;
+	background-image: linear-gradient(
+		-225deg,
+		#4dcec3 0%,
+		#5ecf98 29%,
+		#87da4b 67%,
+		#93d325 100%
+	);
+	background-size: auto auto;
+	background-clip: border-box;
+	background-size: 200% auto;
+	color: #fff;
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	animation: textclip 2s linear infinite;
+	display: inline-block;
+	font-size: 190px;
+}
+
+@keyframes textclip {
+	to {
+		background-position: 200% center;
+	}
+}
+
+.Carousel {
+	width: 60%;
+	height: 40%;
+}
