@@ -59,7 +59,10 @@ function UserDisplay() {
 			document.head.removeChild(linkElement);
 		};
 	}, []);
-
+	const handleLogout = () => {
+		localStorage.clear();
+		window.location.href = "http://localhost:5173/";
+	};
 	return (
 		<>
 			<Sidebar
@@ -77,7 +80,7 @@ function UserDisplay() {
 						Event List
 					</MenuItem>
 
-					<MenuItem> Logout</MenuItem>
+					<MenuItem onClick={handleLogout}> Logout</MenuItem>
 				</Menu>
 			</Sidebar>
 			<div className={styles.dashboardContent}>

@@ -106,6 +106,11 @@ function AdminEventList() {
 		};
 	}, []); // The empty dependency array ensures that this effect runs only once when the component mounts
 
+	const handleLogout = () => {
+		localStorage.clear();
+		window.location.href = "http://localhost:5173/";
+	};
+
 	const staticData = [
 		{
 			photos: [
@@ -222,7 +227,7 @@ function AdminEventList() {
 					<MenuItem component={<Link to="/admineventlist" />}>
 						Event List
 					</MenuItem>
-					<MenuItem> Logout</MenuItem>
+					<MenuItem onClick={handleLogout}> Logout</MenuItem>
 				</Menu>
 			</Sidebar>
 			<div className={styles.dashboardContent}>

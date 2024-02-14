@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import styles from "../assets/css/admin.module.css";
 import {
@@ -25,6 +25,7 @@ ChartJS.register(
 );
 
 function Admin() {
+	const navigate = useNavigate();
 	const data = {
 		labels: [
 			"Seminar",
@@ -117,6 +118,10 @@ function Admin() {
 		const randomIndex = Math.floor(Math.random() * thumbnailUrls.length);
 		return thumbnailUrls[randomIndex];
 	};
+	const handleLogout = () => {
+		localStorage.clear();
+		window.location.href = "http://localhost:5173/";
+	};
 	return (
 		<>
 			<Sidebar
@@ -132,7 +137,7 @@ function Admin() {
 					<MenuItem component={<Link to="/admineventlist" />}>
 						Event List
 					</MenuItem>
-					<MenuItem> Logout</MenuItem>
+					<MenuItem onClick={handleLogout}> Logout</MenuItem>
 				</Menu>
 			</Sidebar>
 			<div className={styles.dashboardContent}>

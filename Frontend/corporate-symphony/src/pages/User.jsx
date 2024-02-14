@@ -85,6 +85,10 @@ function User() {
 			navigate("/eventdetails");
 		}
 	}, [selectedCard]);
+	const handleLogout = () => {
+		localStorage.clear();
+		window.location.href = "http://localhost:5173/";
+	};
 
 	return (
 		<>
@@ -99,7 +103,7 @@ function User() {
 					<MenuItem component={<Link to="/user" />}> Dashboard</MenuItem>
 					<MenuItem component={<Link to="/eventlist" />}> Event List</MenuItem>
 					<MenuItem component={<Link to="/userprofile" />}> Profile</MenuItem>
-					<MenuItem> Logout</MenuItem>
+					<MenuItem onClick={handleLogout}> Logout</MenuItem>
 				</Menu>
 			</Sidebar>
 			<div className={styles.dashboardContent}>

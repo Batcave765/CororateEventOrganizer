@@ -58,6 +58,10 @@ function Bookevents() {
 		setBookingDateTime("");
 	};
 
+	const handleLogout = () => {
+		localStorage.clear();
+		window.location.href = "http://localhost:5173/";
+	};
 	return (
 		<>
 			<Sidebar
@@ -70,7 +74,7 @@ function Bookevents() {
 				<Menu>
 					<MenuItem component={<Link to="/user" />}> Dashboard</MenuItem>
 					<MenuItem component={<Link to="/eventlist" />}> Event List</MenuItem>
-					<MenuItem> Logout</MenuItem>
+					<MenuItem onClick={handleLogout}> Logout</MenuItem>
 				</Menu>
 			</Sidebar>
 			<div className={styles.dashboardContent}>

@@ -40,14 +40,19 @@ const LoginPage = () => {
 				}
 			);
 			console.log("Login Success:", response.data);
-
+			console.log("role", response.data.role);
+			localStorage.setItem("role", JSON.stringify(response.data.role));
 			// Reset email, password, and error state
 			setEmail("");
 			setPassword("");
 			setError("");
 
 			// Redirect to the user page or any other desired page upon successful login
-			navigate("/user");
+			if (response.data.role == "USER") {
+				window.location.href = "http://localhost:5173/user";
+			} else {
+				window.location.href = "http://localhost:5173/admin";
+			}
 		} catch (error) {
 			// If an error occurs, set the error state with the error message
 			console.error("Login Error:", error.response.data);

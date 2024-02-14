@@ -53,6 +53,10 @@ function Profile() {
 		};
 	}, []);
 
+	const handleLogout = () => {
+		localStorage.clear();
+		window.location.href = "http://localhost:5173/";
+	};
 	return (
 		<>
 			<Sidebar
@@ -66,7 +70,7 @@ function Profile() {
 					<MenuItem component={<Link to="/user" />}> Dashboard</MenuItem>
 					<MenuItem component={<Link to="/eventlist" />}> Event List</MenuItem>
 					<MenuItem component={<Link to="/userprofile" />}> Profile</MenuItem>
-					<MenuItem> Logout</MenuItem>
+					<MenuItem onClick={handleLogout}> Logout</MenuItem>
 				</Menu>
 			</Sidebar>
 			<div className={styles.dashboardContent}>

@@ -76,6 +76,11 @@ function EventDetails() {
 	}, []);
 	// The empty dependency array ensures that this effect runs only once when the component mounts
 
+	const handleLogout = () => {
+		localStorage.clear();
+		window.location.href = "http://localhost:5173/";
+	};
+
 	return (
 		<>
 			<Sidebar
@@ -88,7 +93,7 @@ function EventDetails() {
 				<Menu>
 					<MenuItem component={<Link to="/user" />}> Dashboard</MenuItem>
 					<MenuItem component={<Link to="/eventlist" />}> Event List</MenuItem>
-					<MenuItem> Logout</MenuItem>
+					<MenuItem onClick={handleLogout}> Logout</MenuItem>
 				</Menu>
 			</Sidebar>
 			<div className={styles.dashboardContent}>
