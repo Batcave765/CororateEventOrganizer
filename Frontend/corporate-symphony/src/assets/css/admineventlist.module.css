@@ -39,6 +39,33 @@
 	margin-right: 20px;
 }
 
+.newEventData {
+	border-radius: 15px;
+	padding: 20px;
+	margin: auto;
+	margin-top: 80px;
+	margin-left: 40px;
+	width: 80%;
+	align-items: center;
+	justify-content: center;
+	background-image: linear-gradient(62deg, #e0c3fc 0%, #8ec5fc 100%);
+}
+.updateBtn {
+	display: inline-block;
+	padding: 5px 10px;
+	font-size: 14px;
+	margin: 2px 5px;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	background-color: #007bff;
+	color: #ffffff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
 .container {
 	width: 80%;
 	height: 90%;
@@ -72,9 +99,18 @@
 	flex-direction: column;
 }
 #sidebarInfo {
-	background-image: linear-gradient(62deg, #e0c3fc 0%, #8ec5fc 100%);
+	background-color: rgb(156, 156, 156);
 	margin: 20px 0px;
 	padding: 40px 20px;
+}
+
+#contentRightSide {
+	width: 80%;
+	height: 80vh;
+	position: fixed;
+	overflow-y: auto;
+	right: 0;
+	top: 12vh;
 }
 
 .content {
@@ -88,9 +124,22 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	flex-direction: column;
+	flex-wrap: wrap;
 }
 
 .card {
-	z-index: 0;
+	z-index: -200;
+}
+
+@media (min-width: 768px) {
+	.cardContent {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+/* For screens wider than 1200 pixels, use a 4-column layout */
+@media (min-width: 1200px) {
+	.cardContent {
+		grid-template-columns: repeat(4, 1fr);
+	}
 }

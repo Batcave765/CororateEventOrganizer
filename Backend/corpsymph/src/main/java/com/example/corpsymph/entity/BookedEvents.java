@@ -12,17 +12,15 @@ public class BookedEvents {
     private int bookingId;
     private String eventName;
     private String eventEmail;
-    private String eventUserName;
     private String eventBookedDate;
     private String eventDate;
     private String eventDescription;
 
-    public BookedEvents(int bookingId, String eventName, String eventEmail, String eventUserName,
-            String eventBookedDate, String eventDate, String eventDescription) {
+    public BookedEvents(int bookingId, String eventName, String eventEmail, String eventBookedDate, String eventDate,
+            String eventDescription) {
         this.bookingId = bookingId;
         this.eventName = eventName;
         this.eventEmail = eventEmail;
-        this.eventUserName = eventUserName;
         this.eventBookedDate = eventBookedDate;
         this.eventDate = eventDate;
         this.eventDescription = eventDescription;
@@ -56,14 +54,6 @@ public class BookedEvents {
         this.eventEmail = eventEmail;
     }
 
-    public String getEventUserName() {
-        return eventUserName;
-    }
-
-    public void setEventUserName(String eventUserName) {
-        this.eventUserName = eventUserName;
-    }
-
     public String getEventBookedDate() {
         return eventBookedDate;
     }
@@ -91,8 +81,8 @@ public class BookedEvents {
     @Override
     public String toString() {
         return "BookedEvents [bookingId=" + bookingId + ", eventName=" + eventName + ", eventEmail=" + eventEmail
-                + ", eventUserName=" + eventUserName + ", eventBookedDate=" + eventBookedDate + ", eventDate="
-                + eventDate + ", eventDescription=" + eventDescription + "]";
+                + ", eventBookedDate=" + eventBookedDate + ", eventDate=" + eventDate + ", eventDescription="
+                + eventDescription + "]";
     }
 
 }

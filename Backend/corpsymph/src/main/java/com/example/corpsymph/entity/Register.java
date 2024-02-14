@@ -33,8 +33,8 @@ public class Register implements UserDetails {
     private int Id;
     private String name;
     private String email;
-    // private String address;
     private String password;
+    private String mobileno;
 
     @Enumerated(EnumType.STRING)
     private Role role;

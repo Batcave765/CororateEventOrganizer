@@ -4,14 +4,28 @@ import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import styles from "../assets/css/user.module.css";
 import { NewsHeaderCard } from "react-ui-cards";
 import EventDetails from "./EventDetails.jsx";
+import axios from "axios";
 
 function User() {
-	const [toggled, setToggled] = React.useState(false);
-
+	const [toggled, setToggled] = useState(false);
+	const [bookedEvents, setBookedEvents] = useState([]);
+	const [pastEvents, setPastEvents] = useState([]);
 	const [selectedCard, setSelectedCard] = useState(null);
 
 	const navigate = useNavigate();
-
+	const thumbnailUrls = [
+		"http://tinyurl.com/msw44446",
+		"http://tinyurl.com/3e7cu4h8",
+		"http://tinyurl.com/mwwj26b3",
+		"http://tinyurl.com/6jxb99v9",
+		"http://tinyurl.com/6jxb99v9",
+		"http://tinyurl.com/msw44446",
+		// Add more URLs as needed
+	];
+	const getRandomThumbnail = () => {
+		const randomIndex = Math.floor(Math.random() * thumbnailUrls.length);
+		return thumbnailUrls[randomIndex];
+	};
 	useEffect(() => {
 		const linkElement = document.createElement("link");
 		linkElement.rel = "stylesheet";
@@ -26,69 +40,51 @@ function User() {
 	}, []);
 
 	const handleCardClick = (cardDetails) => {
-		// Stringify the cardDetails object
 		const encodedCardDetails = encodeURIComponent(JSON.stringify(cardDetails));
-
-		// Pass the entire object as a query parameter
 		navigate(`/eventdetails?details=${encodedCardDetails}`);
 	};
 
 	useEffect(() => {
-		if (selectedCard) {
-			// Log the selectedCard details
+		const fetchEventData = async () => {
+			try {
+				const response = await axios.get(
+					"http://localhost:8081/api/bookedevents"
+				);
+				const currentDate = new Date();
+				// console.log(response.data[0].eventDate);
+				const events = response.data.map((event) => ({
+					thumbnail: getRandomThumbnail(),
+					title: event.eventName,
+					description: event.eventDescription,
+					tags: [event.eventEmail],
+					date: event.eventDate,
+				}));
 
-			// Navigate to another component (assuming you have a route set up for it)
+				const booked = [];
+				const past = [];
+				events.forEach((event) => {
+					if (new Date(event.date) > currentDate) {
+						booked.push(event);
+					} else {
+						past.push(event);
+					}
+				});
+
+				setBookedEvents(booked);
+				setPastEvents(past);
+			} catch (error) {
+				console.error("Error fetching events:", error);
+			}
+		};
+
+		fetchEventData();
+	}, []);
+
+	useEffect(() => {
+		if (selectedCard) {
 			navigate("/eventdetails");
 		}
 	}, [selectedCard]);
-
-	const bookedEvents = [
-		{
-			thumbnail: "http://tinyurl.com/msw44446",
-			title: "Seminar",
-			description: "A seminar event for user purpose",
-			tags: ["Seminar", "Small", "Professional"],
-			date: "01-02-2024",
-		},
-		{
-			thumbnail: "http://tinyurl.com/3e7cu4h8",
-			title: "Conference",
-			description: "Team Conference",
-			tags: ["Conference", "Medium", "Professional"],
-			date: "05-02-2024",
-		},
-	];
-
-	const pastEvents = [
-		{
-			thumbnail: "http://tinyurl.com/mwwj26b3",
-			title: "Launch Party",
-			description: "New Product Launch Party",
-			tags: ["Launch", "Large", "Professional"],
-			date: "05-01-2024",
-		},
-		{
-			thumbnail: "http://tinyurl.com/msepafkp",
-			title: "Milestone Completion",
-			description: "A seminar event for user purpose",
-			tags: ["Milestone", "Small", "Professional"],
-			date: "10-01-2024",
-		},
-		{
-			thumbnail: "http://tinyurl.com/6jxb99v9",
-			title: "Team Building Event",
-			description: "ABZ company Team building event",
-			tags: ["Coop", "Small", "Casual"],
-			date: "13-01-2024",
-		},
-		{
-			thumbnail: "http://tinyurl.com/msw44446",
-			title: "Seminar",
-			description: "A seminar event for user purpose",
-			tags: ["Seminar", "Small", "Professional"],
-			date: "20-01-2024",
-		},
-	];
 
 	return (
 		<>
@@ -102,6 +98,7 @@ function User() {
 				<Menu>
 					<MenuItem component={<Link to="/user" />}> Dashboard</MenuItem>
 					<MenuItem component={<Link to="/eventlist" />}> Event List</MenuItem>
+					<MenuItem component={<Link to="/userprofile" />}> Profile</MenuItem>
 					<MenuItem> Logout</MenuItem>
 				</Menu>
 			</Sidebar>
@@ -128,7 +125,7 @@ function User() {
 				<div className={styles.containerTotal}>
 					<div className={styles.sidebar}>
 						<div className={styles.content} id={styles.sidebarInfo}>
-							<h2>Upcoming Events: 2</h2>
+							<h2>Upcoming Events: {bookedEvents.length}</h2>
 							{bookedEvents.length > 0 && (
 								<div>
 									<h3>Next Event: {bookedEvents[0].title}</h3>
@@ -138,7 +135,7 @@ function User() {
 							)}
 						</div>
 						<div className={styles.content} id={styles.sidebarInfo}>
-							<h2>Events Visited: 4</h2>
+							<h2>Past Events: {pastEvents.length}</h2>
 						</div>
 					</div>
 					<div className={styles.container}>

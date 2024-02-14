@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios"; // Import Axios
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
 import styles from "../assets/css/bookevents.module.css";
@@ -6,11 +7,8 @@ import styles from "../assets/css/bookevents.module.css";
 function Bookevents() {
 	const [toggled, setToggled] = useState(false);
 	const [eventName, setEventName] = useState("");
-	const [username, setUsername] = useState("");
-	const [companyName, setCompanyName] = useState("");
-	const [contact, setContact] = useState("");
-	const [location, setLocation] = useState("");
-	const [numberOfPeople, setNumberOfPeople] = useState("");
+	const [email, setEmail] = useState("");
+	const [description, setDescription] = useState("");
 	const [eventDateTime, setEventDateTime] = useState("");
 	const [bookingDateTime, setBookingDateTime] = useState("");
 
@@ -28,20 +26,36 @@ function Bookevents() {
 		return () => {
 			document.head.removeChild(linkElement);
 		};
-	}, []); // The empty dependency array ensures that this effect runs only once when the component mounts
+	}, []);
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		// Perform form submission logic here
-		console.log("Form submitted!");
-		console.log("Event Name:", eventName);
-		console.log("Username:", username);
-		console.log("Company Name:", companyName);
-		console.log("Contact:", contact);
-		console.log("Location:", location);
-		console.log("Number of People:", numberOfPeople);
-		console.log("Event Date and Time:", eventDateTime);
-		console.log("Booking Date and Time:", bookingDateTime);
+		try {
+			const eventData = {
+				eventName,
+				eventEmail: email,
+				eventDescription: description,
+				eventDate: eventDateTime,
+				eventBookedDate: bookingDateTime,
+			};
+			const response = await axios.post(
+				"http://localhost:8081/api/bookedevents",
+				eventData
+			);
+			console.log("Form submitted!", response.data);
+			// Clear form fields after successful submission
+			clearFormFields();
+		} catch (error) {
+			console.error("Error submitting form:", error);
+		}
+	};
+
+	const clearFormFields = () => {
+		setEventName("");
+		setEmail("");
+		setDescription("");
+		setEventDateTime("");
+		setBookingDateTime("");
 	};
 
 	return (
@@ -92,50 +106,25 @@ function Bookevents() {
 								/>
 							</div>
 							<div className={styles.formLine}>
-								<label htmlFor="username">Username:</label>
+								<label htmlFor="email">Email:</label>
 								<input
 									type="text"
-									id="username"
-									value={username}
-									onChange={(e) => setUsername(e.target.value)}
+									id="email"
+									value={email}
+									onChange={(e) => setEmail(e.target.value)}
 								/>
 							</div>
+
 							<div className={styles.formLine}>
-								<label htmlFor="companyName">Company Name:</label>
+								<label htmlFor="description">Description:</label>
 								<input
 									type="text"
-									id="companyName"
-									value={companyName}
-									onChange={(e) => setCompanyName(e.target.value)}
+									id="description"
+									value={description}
+									onChange={(e) => setDescription(e.target.value)}
 								/>
 							</div>
-							<div className={styles.formLine}>
-								<label htmlFor="contact">Contact:</label>
-								<input
-									type="text"
-									id="contact"
-									value={contact}
-									onChange={(e) => setContact(e.target.value)}
-								/>
-							</div>
-							<div className={styles.formLine}>
-								<label htmlFor="location">Location:</label>
-								<input
-									type="text"
-									id="location"
-									value={location}
-									onChange={(e) => setLocation(e.target.value)}
-								/>
-							</div>
-							<div className={styles.formLine}>
-								<label htmlFor="numberOfPeople">Number of People:</label>
-								<input
-									type="number"
-									id="numberOfPeople"
-									value={numberOfPeople}
-									onChange={(e) => setNumberOfPeople(e.target.value)}
-								/>
-							</div>
+
 							<div className={styles.formLine}>
 								<label htmlFor="eventDateTime">Event Date and Time:</label>
 								<input

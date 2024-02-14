@@ -13,7 +13,6 @@ public class EventList {
     private String eventName;
     private String eventDescription;
     private String eventImageUrl;
-    private String eventCharges;
 
     public EventList(int eventId, String eventName, String eventDescription, String eventImageUrl,
             String eventCharges) {
@@ -21,7 +20,6 @@ public class EventList {
         this.eventName = eventName;
         this.eventDescription = eventDescription;
         this.eventImageUrl = eventImageUrl;
-        this.eventCharges = eventCharges;
     }
 
     public EventList() {
@@ -60,18 +58,10 @@ public class EventList {
         this.eventImageUrl = eventImageUrl;
     }
 
-    public String getEventCharges() {
-        return eventCharges;
-    }
-
-    public void setEventCharges(String eventCharges) {
-        this.eventCharges = eventCharges;
-    }
-
     @Override
     public String toString() {
         return "EventList [eventId=" + eventId + ", eventName=" + eventName + ", eventDescription=" + eventDescription
-                + ", eventImageUrl=" + eventImageUrl + ", eventCharges=" + eventCharges + "]";
+                + ", eventImageUrl=" + eventImageUrl + "]";
     }
 
 }

@@ -35,24 +35,26 @@ function Home() {
 						<button className={styles.homeButton}>Contact Us!</button>
 					</div>
 				</div>
-				<div className={styles.textContent}>
-					<h3>Corporate Event Planning</h3>
+				<div className={styles.card} id={styles.cardTwo}>
+					<div className={styles.textContent}>
+						<h3>Corporate Event Planning</h3>
 
-					<h4>Event Planning</h4>
-					<p>
-						Event planning for corporate events requires the full understanding
-						of logistics, entertainment, audio visual, fabrication, catering,
-						presentations, breakout sessions, social engagement and the
-						marketing leading up to and following up after your corporate event.
-						We'll handle all the logistics associated with Corporate event
-						planning for optimum results. Our scope of services ranges from
-						executing on the program topics designed to resonate with your
-						audience and developing the schedules for presenters and catering
-						staff. Our Corporate event planners are also pros at venue
-						selection. Event Marketing is right in our wheel-house from creating
-						event websites to creation of programs including speakers, agenda,
-						social media, venue and registration.
-					</p>
+						<h4>Event Planning</h4>
+						<p>
+							Event planning for corporate events requires the full
+							understanding of logistics, entertainment, audio visual,
+							fabrication, catering, presentations, breakout sessions, social
+							engagement and the marketing leading up to and following up after
+							your corporate event. We'll handle all the logistics associated
+							with Corporate event planning for optimum results. Our scope of
+							services ranges from executing on the program topics designed to
+							resonate with your audience and developing the schedules for
+							presenters and catering staff. Our Corporate event planners are
+							also pros at venue selection. Event Marketing is right in our
+							wheel-house from creating event websites to creation of programs
+							including speakers, agenda, social media, venue and registration.
+						</p>
+					</div>
 					<Carousel
 						className={styles.Carousel}
 						showArrows={true}
@@ -92,16 +94,13 @@ function Home() {
 					</div>
 					<div className={styles.footerContent}>
 						<h4>Follow Us</h4>
-						<div className={styles.socialMediaIcons}>
-							<a href="#">
-								<i className="fab fa-facebook"></i>
-							</a>
-							<a href="#">
-								<i className="fab fa-twitter"></i>
-							</a>
-							<a href="#">
-								<i className="fab fa-instagram"></i>
-							</a>
+						<div
+							className={styles.socialMediaIcons}
+							style={{ display: "flex", flexDirection: "column" }}
+						>
+							<a href="#">Facebook</a>
+							<a href="#">Twitter</a>
+							<a href="#">Instagram</a>
 						</div>
 					</div>
 				</div>

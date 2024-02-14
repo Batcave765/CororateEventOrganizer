@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import styles from "../assets/css/admin.module.css";
@@ -12,7 +12,7 @@ import {
 	Legend,
 } from "chart.js";
 import { Radar } from "react-chartjs-2";
-
+import axios from "axios";
 import { NewsHeaderCard } from "react-ui-cards";
 
 ChartJS.register(
@@ -67,54 +67,31 @@ function Admin() {
 			},
 		},
 	};
+	const [bookedEvents, setBookedEvents] = useState([]);
 
-	const bookedEvents = [
-		{
-			thumbnail: "http://tinyurl.com/msw44446",
-			title: "Seminar",
-			description: "A seminar event for user purpose",
-			tags: ["Seminar", "Small", "Professional"],
-			date: "01-02-2024",
-		},
-		{
-			thumbnail: "http://tinyurl.com/3e7cu4h8",
-			title: "Conference",
-			description: "Team Conference",
-			tags: ["Conference", "Medium", "Professional"],
-			date: "05-02-2024",
-		},
-		{
-			thumbnail: "http://tinyurl.com/mwwj26b3",
-			title: "Launch Party",
-			description: "New Product Launch Party",
-			tags: ["Launch", "Large", "Professional"],
-			date: "05-01-2024",
-		},
-		{
-			thumbnail: "http://tinyurl.com/msepafkp",
-			title: "Milestone Completion",
-			description: "A seminar event for user purpose",
-			tags: ["Milestone", "Small", "Professional"],
-			date: "10-01-2024",
-		},
-		{
-			thumbnail: "http://tinyurl.com/6jxb99v9",
-			title: "Team Building Event",
-			description: "ABZ company Team building event",
-			tags: ["Coop", "Small", "Casual"],
-			date: "13-01-2024",
-		},
-		{
-			thumbnail: "http://tinyurl.com/msw44446",
-			title: "Seminar",
-			description: "A seminar event for user purpose",
-			tags: ["Seminar", "Small", "Professional"],
-			date: "20-01-2024",
-		},
-	];
 	const [toggled, setToggled] = React.useState(false);
 
 	useEffect(() => {
+		const fetchBookedEvents = async () => {
+			try {
+				const response = await axios.get(
+					"http://localhost:8081/api/bookedevents"
+				);
+				const formattedEvents = response.data.map((event) => ({
+					thumbnail: getRandomThumbnail(), // thumbnail can be null
+					title: event.eventName,
+					description: event.eventDescription,
+					tags: [event.eventEmail], // eventEmail goes to tags
+					date: event.eventDate,
+				}));
+				setBookedEvents(formattedEvents);
+			} catch (error) {
+				console.error("Error fetching booked events:", error);
+			}
+		};
+
+		fetchBookedEvents();
+
 		const linkElement = document.createElement("link");
 		linkElement.rel = "stylesheet";
 		linkElement.href =
@@ -126,7 +103,20 @@ function Admin() {
 			document.head.removeChild(linkElement);
 		};
 	}, []);
+	const thumbnailUrls = [
+		"http://tinyurl.com/msw44446",
+		"http://tinyurl.com/3e7cu4h8",
+		"http://tinyurl.com/mwwj26b3",
+		"http://tinyurl.com/6jxb99v9",
+		"http://tinyurl.com/6jxb99v9",
+		"http://tinyurl.com/msw44446",
+		// Add more URLs as needed
+	];
 
+	const getRandomThumbnail = () => {
+		const randomIndex = Math.floor(Math.random() * thumbnailUrls.length);
+		return thumbnailUrls[randomIndex];
+	};
 	return (
 		<>
 			<Sidebar
@@ -177,7 +167,7 @@ function Admin() {
 						/>
 					</div>
 					<div className={styles.content} id={styles.sidebarInfo}>
-						<h2>Upcoming Events: 2</h2>
+						<h2>Upcoming Events: {bookedEvents.length}</h2>
 					</div>
 				</div>
 				<div className={styles.container}>

@@ -1,14 +1,24 @@
 {
-    "configurations": [
-        {
-            "type": "java",
-            "name": "Spring Boot-FirstsampleApplication<firstsample>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "mainClass": "com.example.firstsample.FirstsampleApplication",
-            "projectName": "firstsample",
-            "args": "",
-            "envFile": "${workspaceFolder}/.env"
-        }
-    ]
+	"configurations": [
+		{
+			"type": "java",
+			"name": "Spring Boot-FirstsampleApplication<firstsample>",
+			"request": "launch",
+			"cwd": "${workspaceFolder}",
+			"mainClass": "com.example.firstsample.FirstsampleApplication",
+			"projectName": "firstsample",
+			"args": "",
+			"envFile": "${workspaceFolder}/.env"
+		},
+		{
+			"type": "java",
+			"name": "Spring Boot-CorpsymphApplication<corpsymph>",
+			"request": "launch",
+			"cwd": "${workspaceFolder}",
+			"mainClass": "com.example.corpsymph.CorpsymphApplication",
+			"projectName": "corpsymph",
+			"args": "",
+			"envFile": "${workspaceFolder}/.env"
+		}
+	]
 }

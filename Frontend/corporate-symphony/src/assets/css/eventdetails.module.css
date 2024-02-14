@@ -73,6 +73,17 @@
 	width: 80%;
 	align-items: center;
 	justify-content: center;
+	background-image: linear-gradient(62deg, #e0c3fc 0%, #8ec5fc 100%);
+}
+
+#profileDetails {
+	width: 50%;
+	height: 50vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	margin: 27vh auto;
 }
 
 .card {

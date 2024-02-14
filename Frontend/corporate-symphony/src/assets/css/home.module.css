@@ -4,21 +4,51 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	background: hsla(138, 82%, 69%, 1);
+
+	background: linear-gradient(
+		90deg,
+		rgba(111, 241, 150, 0.2) 0%,
+		hsla(186, 100%, 50%, 0.2) 100%
+	);
+
+	background: -moz-linear-gradient(
+		90deg,
+		hsla(138, 82%, 69%, 0.2) 0%,
+		hsla(186, 100%, 50%, 0.2) 100%
+	);
+
+	background: -webkit-linear-gradient(
+		90deg,
+		hsla(138, 82%, 69%, 0.2) 0%,
+		hsla(186, 100%, 50%, 0.2) 100%
+	);
+
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#6ef195", endColorstr="#00e3fd", GradientType=1 );
 }
 
 #cardOne {
 	background: rgb(59, 38, 101);
 	background-image: linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%);
+	margin: 10vh 0;
+	height: 70vh;
+}
+
+#cardTwo {
+	background: rgb(59, 38, 101);
+	background-image: linear-gradient(62deg, #e0c3fc 0%, #8ec5fc 100%);
+	margin: 10vh 0;
+	height: 80vh;
 }
 
 .card {
-	width: 80%;
-	height: 50vh;
+	width: 90%;
+	/* height: 50vh; */
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	padding: 20px;
-	margin: 20px;
+	/* margin: 20px; */
 
 	border-radius: 10px;
 }
@@ -97,6 +127,44 @@
 	);
 	background-size: 200% auto; /* Set background size to accommodate the animation */
 	animation: button 2s linear infinite;
+}
+
+/* Styles for the footer container */
+.footerContainer {
+	text-align: center;
+	display: flex;
+	justify-content: space-between;
+	padding: 40px;
+	background-color: #333;
+	color: #fff;
+}
+
+/* Styles for the footer content */
+.footerContent {
+	flex: 1;
+}
+
+/* Styles for the heading in the footer content */
+.footerContent h4 {
+	margin-bottom: 10px;
+}
+
+/* Styles for the social media icons */
+.socialMediaIcons {
+	display: flex;
+	gap: 10px;
+}
+
+/* Styles for the social media icons */
+.socialMediaIcons a {
+	color: #fff;
+}
+
+/* Styles for the footer text */
+.footerText {
+	text-align: center;
+	margin: 20px;
+	color: #000000;
 }
 
 @keyframes button {

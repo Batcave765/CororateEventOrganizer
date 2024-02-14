@@ -76,7 +76,7 @@
 	flex-direction: column;
 }
 #sidebarInfo {
-	background-color: rgb(156, 156, 156);
+	background-image: linear-gradient(62deg, #e0c3fc 0%, #8ec5fc 100%);
 	margin: 20px 0px;
 	padding: 40px 20px;
 }

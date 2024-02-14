@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "../assets/css/eventdetails.module.css";
-import { ProductCard } from "react-ui-cards";
+// import { ProductCard } from "react-ui-cards";
 
 function Profile() {
 	const [toggled, setToggled] = React.useState(false);
@@ -65,6 +65,7 @@ function Profile() {
 				<Menu>
 					<MenuItem component={<Link to="/user" />}> Dashboard</MenuItem>
 					<MenuItem component={<Link to="/eventlist" />}> Event List</MenuItem>
+					<MenuItem component={<Link to="/userprofile" />}> Profile</MenuItem>
 					<MenuItem> Logout</MenuItem>
 				</Menu>
 			</Sidebar>
@@ -89,9 +90,12 @@ function Profile() {
 					<h1>Profile:</h1>
 				</main>
 
-				<div className={styles.cardContent + " " + styles.card}>
+				<div
+					className={styles.cardContent + " " + styles.card}
+					id={styles.profileDetails}
+				>
 					<div className={styles.line}>
-						<h2>User Profile</h2>
+						<h1>User Profile</h1>
 						<button className={styles.sidebarButton} onClick={toggleEditMode}>
 							{editMode ? (
 								<span

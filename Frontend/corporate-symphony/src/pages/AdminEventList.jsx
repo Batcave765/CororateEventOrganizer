@@ -1,35 +1,81 @@
 import React, { useEffect, useState } from "react";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Link, useNavigate } from "react-router-dom";
-import styles from "../assets/css/eventlist.module.css";
+import styles from "../assets/css/admineventlist.module.css";
 import { ProductCard } from "react-ui-cards";
+import axios from "axios";
 
 function AdminEventList() {
 	const [toggled, setToggled] = React.useState(false);
+	const [eventData, setEventData] = useState([]);
 	const navigate = useNavigate();
-
-	const [showAddEventForm, setShowAddEventForm] = useState(false);
-	const [newEventData, setNewEventData] = useState({
-		photos: [],
-		float: true,
-		price: "",
-		productName: "",
-		description: "",
-		buttonText: "Book Now",
+	const [addData, setAddData] = useState({
+		eventName: "",
+		eventDescription: "",
+		eventImageUrl: "",
 	});
+	const [eventIdToDelete, setEventIdToDelete] = useState("");
 
-	const addNewEvent = () => {
-		setEventData((prevEvents) => [...prevEvents, newEventData]);
-		setShowAddEventForm(false);
-		setNewEventData({
-			photos: [],
-			float: true,
-			price: "",
-			productName: "",
-			description: "",
-			buttonText: "Book Now",
+	const deleteEvent = async () => {
+		try {
+			await axios.delete(
+				`http://localhost:8081/api/event-list/${eventIdToDelete}`
+			);
+			console.log("Event deleted successfully");
+			setEventIdToDelete("");
+			// After successful deletion, you might want to update the state to reflect the change
+			// For example, you could refetch the event data or remove the deleted event from the state directly.
+		} catch (error) {
+			console.error("Error deleting event:", error);
+		}
+	};
+
+	const addNewEvent = async () => {
+		if (
+			addData.eventName.trim() === "" ||
+			addData.eventDescription.trim() === "" ||
+			addData.eventImageUrl.trim() === ""
+		) {
+			// Handle empty fields error, display a message or prevent submission
+			return;
+		}
+		try {
+			// Make a POST request to your backend API using addData
+			const response = await axios.post(
+				"http://localhost:8081/api/event-list",
+				addData
+			);
+			console.log("Event added successfully:", response.data);
+
+			// Update the local state with the newly added event
+			setEventData((prevEvents) => [...prevEvents, response.data]);
+
+			// Reset addData to initial state
+			setAddData({
+				eventName: "",
+				eventDescription: "",
+				eventImageUrl: "",
+			});
+		} catch (error) {
+			console.error("Error adding new event:", error);
+		}
+	};
+
+	const cancelAddEvent = () => {
+		// Clear addData state
+		setAddData({
+			eventName: "",
+			eventDescription: "",
+			eventImageUrl: "",
 		});
-		toggleAddEventForm();
+	};
+
+	const handleChange = (e) => {
+		// Update addData state based on input changes
+		setAddData({
+			...addData,
+			[e.target.name]: e.target.value,
+		});
 	};
 
 	useEffect(() => {
@@ -41,14 +87,26 @@ function AdminEventList() {
 
 		// Append the link element to the head of the document
 		document.head.appendChild(linkElement);
+		const fetchEventData = async () => {
+			try {
+				const response = await axios.get(
+					"http://localhost:8081/api/event-list"
+				);
+				setEventData(response.data);
+				console.log(response.data);
+			} catch (error) {
+				console.error("Error fetching event data:", error);
+			}
+		};
 
+		fetchEventData();
 		// Cleanup function to remove the link element when the component is unmounted
 		return () => {
 			document.head.removeChild(linkElement);
 		};
 	}, []); // The empty dependency array ensures that this effect runs only once when the component mounts
 
-	const eventData = [
+	const staticData = [
 		{
 			photos: [
 				"https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -133,18 +191,18 @@ function AdminEventList() {
 				"Curating events to connect experts, fostering knowledge exchange and networking on specific topics.",
 			buttonText: "Book Now",
 		},
-		{
-			photos: [
-				"https://images.unsplash.com/photo-1630569267625-157f8f9d1a7e?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-				"https://plus.unsplash.com/premium_photo-1661281345831-72aac72beb52?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-			],
-			float: true,
-			price: "#8",
-			productName: "Custom Events",
-			description:
-				"Crafting unique gatherings tailored to your preferences, creating memorable experiences for personalized events.",
-			buttonText: "Book Now",
-		},
+		// {
+		// 	photos: [
+		// 		"https://images.unsplash.com/photo-1630569267625-157f8f9d1a7e?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+		// 		"https://plus.unsplash.com/premium_photo-1661281345831-72aac72beb52?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+		// 	],
+		// 	float: true,
+		// 	price: "#8",
+		// 	productName: "Custom Events",
+		// 	description:
+		// 		"Crafting unique gatherings tailored to your preferences, creating memorable experiences for personalized events.",
+		// 	buttonText: "Book Now",
+		// },
 
 		// Add more event data objects as needed
 	];
@@ -159,8 +217,11 @@ function AdminEventList() {
 				backgroundColor="white"
 			>
 				<Menu>
-					<MenuItem component={<Link to="/user" />}> Dashboard</MenuItem>
-					<MenuItem component={<Link to="/eventlist" />}> Event List</MenuItem>
+					<MenuItem component={<Link to="/admin" />}> Dashboard</MenuItem>
+					<MenuItem component={<Link to="/userdisplay" />}>Users</MenuItem>
+					<MenuItem component={<Link to="/admineventlist" />}>
+						Event List
+					</MenuItem>
 					<MenuItem> Logout</MenuItem>
 				</Menu>
 			</Sidebar>
@@ -183,31 +244,71 @@ function AdminEventList() {
 						</button>
 					</div>
 					<h1>Available Events:</h1>
-					<button onClick={() => setShowAddEventForm(true)}>
-						{showAddEventForm ? "Cancel" : "Add New Event"}
-					</button>
 				</main>
-				<div className={styles.cardContent}>
-					{showAddEventForm && (
-						<div>
+				<div className={styles.containerTotal}>
+					<div className={styles.sidebar}>
+						<div className={styles.newEventData}>
 							<label>Event Name: </label>
 							<input
+								className={styles.addEvent}
 								type="text"
-								value={newEventData.productName}
-								onChange={(e) =>
-									setNewEventData({
-										...newEventData,
-										productName: e.target.value,
-									})
-								}
+								name="eventName"
+								value={addData.eventName}
+								onChange={handleChange}
 							/>
-
-							<button onClick={addNewEvent}>Save Event</button>
+							<label>Event Description: </label>
+							<input
+								className={styles.addEvent}
+								type="text"
+								name="eventDescription"
+								value={addData.eventDescription}
+								onChange={handleChange}
+							/>
+							<label>Event Image URL: </label>
+							<input
+								className={styles.addEvent}
+								type="text"
+								name="eventImageUrl"
+								value={addData.eventImageUrl}
+								onChange={handleChange}
+							/>
+							<div>
+								<button className={styles.updateBtn} onClick={addNewEvent}>
+									Save Event
+								</button>
+								<button className={styles.updateBtn} onClick={cancelAddEvent}>
+									Cancel
+								</button>
+							</div>
 						</div>
-					)}
-					<div className={styles.cardContent}>
-						{eventData.map((event, index) => (
+						<div className={styles.newEventData}>
+							<label>Enter Event ID:</label>
+							<input
+								className={styles.addEvent}
+								type="text"
+								name="eventIdToDelete"
+								value={eventIdToDelete}
+								onChange={(e) => setEventIdToDelete(e.target.value)}
+							/>
+							<button className={styles.updateBtn} onClick={deleteEvent}>
+								Delete Event
+							</button>
+						</div>
+					</div>
+					<div className={styles.cardContent} id={styles.contentRightSide}>
+						{staticData.map((event, index) => (
 							<ProductCard key={index} {...event} />
+						))}
+						{eventData.map((event, index) => (
+							<ProductCard
+								key={index}
+								photos={[event.eventImageUrl]} // Use eventImageUrl as photos
+								float={true}
+								price={"#" + event.eventId}
+								productName={event.eventName} // Use eventName as productName
+								description={event.eventDescription} // Use eventDescription as description
+								buttonText="Book Now" // Hardcoded button text
+							/>
 						))}
 					</div>
 				</div>

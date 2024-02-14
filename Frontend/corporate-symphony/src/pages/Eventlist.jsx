@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "../assets/css/eventlist.module.css";
 import { ProductCard } from "react-ui-cards";
+import axios from "axios";
 
 function Eventlist() {
 	const [toggled, setToggled] = React.useState(false);
 	const navigate = useNavigate();
+	const [eventData, setEventData] = useState([]);
 
 	useEffect(() => {
 		// Create a link element for the Google Fonts stylesheet
@@ -17,14 +19,28 @@ function Eventlist() {
 
 		// Append the link element to the head of the document
 		document.head.appendChild(linkElement);
+		const fetchEventData = async () => {
+			try {
+				const response = await axios.get(
+					"http://localhost:8081/api/event-list"
+				);
+				setEventData(response.data);
+				console.log(response.data);
+			} catch (error) {
+				console.error("Error fetching event data:", error);
+			}
+		};
 
-		// Cleanup function to remove the link element when the component is unmounted
+		fetchEventData();
+
+		// Cleanup function to clear event data when unmounting
 		return () => {
+			setEventData([]);
 			document.head.removeChild(linkElement);
 		};
 	}, []); // The empty dependency array ensures that this effect runs only once when the component mounts
 
-	const eventData = [
+	const staticData = [
 		{
 			photos: [
 				"https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -109,18 +125,18 @@ function Eventlist() {
 				"Curating events to connect experts, fostering knowledge exchange and networking on specific topics.",
 			buttonText: "Book Now",
 		},
-		{
-			photos: [
-				"https://images.unsplash.com/photo-1630569267625-157f8f9d1a7e?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-				"https://plus.unsplash.com/premium_photo-1661281345831-72aac72beb52?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-			],
-			float: true,
-			price: "#8",
-			productName: "Custom Events",
-			description:
-				"Crafting unique gatherings tailored to your preferences, creating memorable experiences for personalized events.",
-			buttonText: "Book Now",
-		},
+		// {
+		// 	photos: [
+		// 		"https://images.unsplash.com/photo-1630569267625-157f8f9d1a7e?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+		// 		"https://plus.unsplash.com/premium_photo-1661281345831-72aac72beb52?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+		// 	],
+		// 	float: true,
+		// 	price: "#8",
+		// 	productName: "Custom Events",
+		// 	description:
+		// 		"Crafting unique gatherings tailored to your preferences, creating memorable experiences for personalized events.",
+		// 	buttonText: "Book Now",
+		// },
 
 		// Add more event data objects as needed
 	];
@@ -137,6 +153,7 @@ function Eventlist() {
 				<Menu>
 					<MenuItem component={<Link to="/user" />}> Dashboard</MenuItem>
 					<MenuItem component={<Link to="/eventlist" />}> Event List</MenuItem>
+					<MenuItem component={<Link to="/userprofile" />}> Profile</MenuItem>
 					<MenuItem> Logout</MenuItem>
 				</Menu>
 			</Sidebar>
@@ -162,10 +179,22 @@ function Eventlist() {
 				</main>
 
 				<div className={styles.cardContent}>
-					{eventData.map((event, index) => (
+					{staticData.map((event, index) => (
 						<ProductCard
 							key={index}
 							{...event}
+							onClick={() => navigate("/bookevents")}
+						/>
+					))}
+					{eventData.map((event, index) => (
+						<ProductCard
+							key={index}
+							photos={[event.eventImageUrl]} // Use eventImageUrl as photos
+							float={true}
+							price={"#" + event.eventId}
+							productName={event.eventName} // Use eventName as productName
+							description={event.eventDescription} // Use eventDescription as description
+							buttonText="Book Now" // Hardcoded button text
 							onClick={() => navigate("/bookevents")}
 						/>
 					))}

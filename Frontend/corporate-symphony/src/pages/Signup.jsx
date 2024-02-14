@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "../assets/css/Login.module.css";
 import signupImage from "../assets/images/signup.svg";
 import Navbar from "../components/Navbar.jsx";
+import axios from "axios";
 
 const Signup = () => {
 	const navigate = useNavigate();
@@ -21,7 +22,7 @@ const Signup = () => {
 		return emailRegex.test(email);
 	};
 
-	const handleSignup = (e) => {
+	const handleSignup = async (e) => {
 		e.preventDefault();
 
 		if (!username || !email || !mobileNumber || !password || !confirmPassword) {
@@ -39,24 +40,37 @@ const Signup = () => {
 			return;
 		}
 
-		console.log("Username:", username);
-		console.log("Email:", email);
-		console.log("Mobile Number:", mobileNumber);
-		console.log("Password:", password);
-		console.log("Confirm Password:", confirmPassword);
-		console.log("Role:", role);
+		try {
+			// Make a POST request using Axios
+			const response = await axios.post(
+				"http://localhost:8081/api/v1/auth/register",
+				{
+					name: username,
+					email,
+					mobileno: mobileNumber,
+					password,
+					role,
+				}
+			);
+			console.log("Signup Success:", response.data);
 
-		// Additional logic for signup (API calls, etc.) can be added here
+			// Reset form fields and error state
+			setUsername("");
+			setEmail("");
+			setMobileNumber("");
+			setPassword("");
+			setConfirmPassword("");
+			setRole("User");
+			setError("");
 
-		setUsername("");
-		setEmail("");
-		setMobileNumber("");
-		setPassword("");
-		setConfirmPassword("");
-		setRole("User");
-		setError("");
-
-		navigate("/login");
+			// Redirect to login page
+			navigate("/login");
+		} catch (error) {
+			console.error("Signup Error:", error.response.data);
+			setError(
+				error.response.data.message || "An error occurred during signup"
+			);
+		}
 	};
 
 	return (

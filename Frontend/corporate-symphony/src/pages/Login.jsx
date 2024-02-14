@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import loginImage from "../assets/images/login.png";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
+import axios from "axios";
 
 const LoginPage = () => {
 	const navigate = useNavigate();
@@ -16,7 +17,7 @@ const LoginPage = () => {
 		return emailRegex.test(email);
 	};
 
-	const handleLogin = (e) => {
+	const handleLogin = async (e) => {
 		e.preventDefault();
 
 		if (!email || !password) {
@@ -29,13 +30,29 @@ const LoginPage = () => {
 			return;
 		}
 
-		console.log("Email:", email);
-		console.log("Password:", password);
+		try {
+			// Make a POST request to the login endpoint
+			const response = await axios.post(
+				"http://localhost:8081/api/v1/auth/authenticate",
+				{
+					email,
+					password,
+				}
+			);
+			console.log("Login Success:", response.data);
 
-		setEmail("");
-		setPassword("");
-		setError("");
-		navigate("/user");
+			// Reset email, password, and error state
+			setEmail("");
+			setPassword("");
+			setError("");
+
+			// Redirect to the user page or any other desired page upon successful login
+			navigate("/user");
+		} catch (error) {
+			// If an error occurs, set the error state with the error message
+			console.error("Login Error:", error.response.data);
+			setError(error.response.data.message || "An error occurred during login");
+		}
 	};
 
 	return (
